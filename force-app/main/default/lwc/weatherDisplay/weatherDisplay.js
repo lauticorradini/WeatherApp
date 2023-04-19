@@ -1,20 +1,21 @@
-import { LightningElement, wire } from 'lwc';
-import weatherController from '@salesforce/apex/WeatherController.fetchWeather';
+import { LightningElement, track } from 'lwc';
+import fetchWeather from '@salesforce/apex/WeatherController.fetchWeather';
 
 export default class WeatherDisplay extends LightningElement {
-    search;
-    error;
+    @track city;
 
-    @wire(weatherController, {
-        city : '$city'
-    })
-    wiredCity({data, error}){
-        if(data){
-            if(this.search !== data){
-                this.search = data;
-            }
-        } else if(error){
-            this.error = error;
-        }
+    handleCityChange(event) {
+        this.city = event.target.value;
+    }
+
+    handleGetWeather() {
+        fetchWeather({city: this.city})
+            .then(result => {
+                console.log('Weather information:', result);
+                //TODO: display weather information on the page
+            })
+            .catch(error => {
+                console.error('Error fetching weather information', error);
+            });
     }
 }
