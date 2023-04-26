@@ -1,26 +1,27 @@
 <template>
-    <lightning-card>
-        <lightning-input type="search"
-                        label="Enter a city" 
-                        value={city} 
-                        onchange={handleCityChange}>
-        </lightning-input>
-        <lightning-button label="Get weather" 
-                        onclick={handleGetWeather}>
-        </lightning-button>
-        <template if:true={display}>
-            <div class="slds-box">
-                <p>City: {display.city}, {display.country}</p>
-                <p>Weather: {display.weather}, {display.description} <img src={display.icon}></p>
-                <p>Temperature: {display.temperature}°C</p>
-                <p>Wind Speed: {display.wind} m/s</p>
-                <p>Humidity: {display.humidity}%</p>
+    <div class="container">
+        <lightning-card>
+            <h1 class="header">Weather App</h1>
+            <div class="search-wrapper">
+                <lightning-input type="search" class="search-box" label="Enter a city" value={city}
+                    onchange={handleCityChange}></lightning-input>
             </div>
-        </template>
-        <template if:false={display}>
-            <div class="slds-box">
-                <p>Oops... No results for {city}</p>
-            </div>
-        </template>
-    </lightning-card>
+            <template if:true={display}>
+                <div class="slds-box">
+                    <p class="city">{display.city}, {display.country}</p>
+                    <div class="weather-wrapper">
+                        <p class="weather">{display.weather}, {display.description} <img src={display.icon}></p>
+                        <p class="temperature">Temperature: {display.temperature}°C</p>
+                        <p class="wind-speed">Wind Speed: {display.wind} m/s</p>
+                        <p class="humidity">Humidity: {display.humidity}%</p>
+                    </div>
+                </div>
+            </template>
+            <template if:false={display}>
+                <div class="slds-box">
+                    <p>Oops... No results for {city}</p>
+                </div>
+            </template>
+        </lightning-card>
+    </div>
 </template>
